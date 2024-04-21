@@ -84,6 +84,11 @@ const chat = () => {
 
   const onLayer01Click = useCallback(() => {
     // Please sync "iPhone 13 & 14 - 8" to the project
+    router.push("/");
+  }, []);
+  const onProfile = useCallback(() => {
+    
+    window.location.href = "https://www.google.com";
   }, []);
 
   const handleClickLogo = () => {
@@ -105,23 +110,7 @@ const chat = () => {
     setInputText(event.target.value);
   };
 
-  // const handleSendClick = async () => {
-  //   try {
-  //       const response = await fetch('https://bitroot-pkrfjsbe6q-el.a.run.app/chat/', {
-  //           method: 'POST',
-  //           headers: {
-  //               'Content-Type': 'application/json',
-  //           },
-  //           body: JSON.stringify({ message: message }),  
-  //       });
-  //       const data = await response.json();
-  //       console.log(data)
-  //       setAnswer(data.response);
-  //   } catch (error) {
-  //       console.error('Error:', error);
-  //       setAnswer('Error fetching data');
-  //   }
-  // };
+
 
   console.log(responseText, "responseText");
 
@@ -183,6 +172,7 @@ const chat = () => {
           className="absolute top-[0px] left-[318.5px] rounded-[50%] w-[39px] h-[39px] object-cover"
           alt=""
           src="/ellipse-8@2x.png"
+          onClick={onProfile}
         />
       </div>
     </div>

@@ -29,10 +29,10 @@ const IPhone1314 = () => {
       </b>
       <div className="absolute top-[798px] left-[137px] w-[126px] h-[26.1px] text-[13.5px] font-inter">
         <div className="absolute top-[10.13px] left-[0px] whitespace-pre-wrap">
-          Made in House
+          Made in
         </div>
         <img
-          className="absolute top-[0px] left-[52.88px] w-[31.5px] h-[25.9px] object-cover"
+          className="absolute top-[-18px] left-[56.88px] w-[50.5px] h-[60.9px] object-cover"
           alt=""
           src="/layer-0-1@2x.png"
         />
