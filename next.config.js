@@ -4,4 +4,10 @@
     
   }
 
-  module.exports = nextConfig
+module.exports = {
+  // other configurations
+  output: {
+    // Set the `output` configuration to `export`
+    export: true,
+  },
+};
