@@ -2,13 +2,13 @@ import { Router, useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useCallback } from "react";
 
-import {
-  Message,
-  NobleEd25519Signer,
-  FarcasterNetwork,
-  makeCastAdd,
-} from "@farcaster/core";
-import { hexToBytes } from "@noble/hashes/utils";
+// import {
+//   Message,
+//   NobleEd25519Signer,
+//   FarcasterNetwork,
+//   makeCastAdd,
+// } from "@farcaster/core";
+// import { hexToBytes } from "@noble/hashes/utils";
 
 const messages = [
   // "Why did the founder NFT see a therapist? Too many unresolved transactions!",
@@ -141,48 +141,48 @@ const chat = () => {
   const FID = "495709";
   const SIGNER = "0xa3e791507d69dc0eb5951cbd62a67aa06871b793266827b0b78ba774714ff2a8"
   
-  async function sendCast(message, parentUrl) {
-    try {
+  // async function sendCast(message, parentUrl) {
+  //   try {
   
-      const dataOptions = {
-        fid: FID,
-        network: FarcasterNetwork.MAINNET,
-      };
+  //     const dataOptions = {
+  //       fid: FID,
+  //       network: FarcasterNetwork.MAINNET,
+  //     };
   
-      const privateKeyBytes = hexToBytes(SIGNER.slice(2));
+  //     const privateKeyBytes = hexToBytes(SIGNER.slice(2));
   
-      const ed25519Signer = new NobleEd25519Signer(privateKeyBytes);
+  //     const ed25519Signer = new NobleEd25519Signer(privateKeyBytes);
   
-      const castBody = {
-        text: "HELO",
-        embeds: [],
-        embedsDeprecated: [],
-        mentions: [],
-        mentionsPositions: [],
-        parentUrl: parentUrl,
-      };
+  //     const castBody = {
+  //       text: "HELO",
+  //       embeds: [],
+  //       embedsDeprecated: [],
+  //       mentions: [],
+  //       mentionsPositions: [],
+  //       parentUrl: parentUrl,
+  //     };
   
-      const castAddReq = await makeCastAdd(castBody, dataOptions, ed25519Signer);
-      const castAdd= castAddReq._unsafeUnwrap();
-      const messageBytes = Buffer.from(Message.encode(castAdd).finish());
+  //     const castAddReq = await makeCastAdd(castBody, dataOptions, ed25519Signer);
+  //     const castAdd= castAddReq._unsafeUnwrap();
+  //     const messageBytes = Buffer.from(Message.encode(castAdd).finish());
       
-      // Make API request 
-      const castRequest = await fetch(
-        "https://hub.pinata.cloud/v1/submitMessage",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/octet-stream" },
-          body: messageBytes,
-        },
-      );
-      // Parse API request results
-      const castResult = await castRequest.json();
-      console.log(castResult);
-      return castResult
-    } catch (error) {
-      console.log("problem sending cast:", error);
-    }
-  }
+  //     // Make API request 
+  //     const castRequest = await fetch(
+  //       "https://hub.pinata.cloud/v1/submitMessage",
+  //       {
+  //         method: "POST",
+  //         headers: { "Content-Type": "application/octet-stream" },
+  //         body: messageBytes,
+  //       },
+  //     );
+  //     // Parse API request results
+  //     const castResult = await castRequest.json();
+  //     console.log(castResult);
+  //     return castResult
+  //   } catch (error) {
+  //     console.log("problem sending cast:", error);
+  //   }
+  // }
   // Call our function
   // sendCast("Hello World from Bun.sh", "https://warpcast.com/~/channel/pinata");
   
