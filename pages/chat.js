@@ -184,7 +184,7 @@ const chat = () => {
     }
   }
   // Call our function
-  sendCast("Hello World from Bun.sh", "https://warpcast.com/~/channel/pinata");
+  // sendCast("Hello World from Bun.sh", "https://warpcast.com/~/channel/pinata");
   
 
   return (
