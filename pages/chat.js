@@ -2,6 +2,13 @@ import { Router, useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useCallback } from "react";
 
+import {
+  Message,
+  NobleEd25519Signer,
+  FarcasterNetwork,
+  makeCastAdd,
+} from "@farcaster/core";
+import { hexToBytes } from "@noble/hashes/utils";
 
 const messages = [
   // "Why did the founder NFT see a therapist? Too many unresolved transactions!",
@@ -25,6 +32,7 @@ const chat = () => {
   const [message, setMessage] = useState("");
   const [initialMessage, setInitialMessage] = useState("Iam Bitroot");
   const [answer, setAnswer] = useState("How can I help you today?"); 
+
 
 
   useEffect(() => {
@@ -76,8 +84,22 @@ const chat = () => {
       router.push('/login');
     }
 
-    
+    // if(message.toLowerCase() === "check in") {
+    //   setAnswer('Your Door is Open');
 
+    // }
+    if (message.toLowerCase().includes("door")) {
+      setAnswer('Open Sesame, your door has been opened.');
+    }
+
+    if(message.toLowerCase().includes("laundry")) {
+      setAnswer('Zo Zo Zo! Your laundry request is all set and spinning');
+    } 
+
+    if(message.toLowerCase().includes("complaint")) {
+      setAnswer('Zo Zo Zo! House captain headed your way—issue resolved soon! 🚀');
+    } 
+  
 
     
   };
@@ -88,7 +110,7 @@ const chat = () => {
   }, []);
   const onProfile = useCallback(() => {
     
-    window.location.href = "https://www.google.com";
+    window.location.href = "https://warpcast.com/bitroot";
   }, []);
 
   const handleClickLogo = () => {
@@ -113,6 +135,57 @@ const chat = () => {
 
 
   console.log(responseText, "responseText");
+
+  
+  
+  const FID = "495709";
+  const SIGNER = "0xa3e791507d69dc0eb5951cbd62a67aa06871b793266827b0b78ba774714ff2a8"
+  
+  async function sendCast(message, parentUrl) {
+    try {
+  
+      const dataOptions = {
+        fid: FID,
+        network: FarcasterNetwork.MAINNET,
+      };
+  
+      const privateKeyBytes = hexToBytes(SIGNER.slice(2));
+  
+      const ed25519Signer = new NobleEd25519Signer(privateKeyBytes);
+  
+      const castBody = {
+        text: "HELO",
+        embeds: [],
+        embedsDeprecated: [],
+        mentions: [],
+        mentionsPositions: [],
+        parentUrl: parentUrl,
+      };
+  
+      const castAddReq = await makeCastAdd(castBody, dataOptions, ed25519Signer);
+      const castAdd= castAddReq._unsafeUnwrap();
+      const messageBytes = Buffer.from(Message.encode(castAdd).finish());
+      
+      // Make API request 
+      const castRequest = await fetch(
+        "https://hub.pinata.cloud/v1/submitMessage",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/octet-stream" },
+          body: messageBytes,
+        },
+      );
+      // Parse API request results
+      const castResult = await castRequest.json();
+      console.log(castResult);
+      return castResult
+    } catch (error) {
+      console.log("problem sending cast:", error);
+    }
+  }
+  // Call our function
+  sendCast("Hello World from Bun.sh", "https://warpcast.com/~/channel/pinata");
+  
 
   return (
     <div className="w-full relative h-[844px] overflow-hidden bg-[url('/iphone-13--14--10@3x.png')] bg-cover bg-no-repeat bg-[top] text-left text-sm text-white font-space-grotesk">
@@ -175,6 +248,7 @@ const chat = () => {
           onClick={onProfile}
         />
       </div>
+     
     </div>
   );
 };
